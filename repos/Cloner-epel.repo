@@ -1,0 +1,7 @@
+[clonerepel]
+name=Extra Packages for Enterprise Linux 6 - $basearch
+baseurl=http://download.fedoraproject.org/pub/epel/6/$basearch
+failovermethod=priority
+enabled=1
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
