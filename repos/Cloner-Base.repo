@@ -1,5 +1,5 @@
 
-[cloneribasic]
+[clonerbasic]
 name=CentOS-$releasever - Base
 baseurl=http://mirror.centos.org/centos/$releasever/os/$basearch/
 gpgcheck=0
