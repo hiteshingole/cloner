@@ -11,8 +11,8 @@ repo_create()
 
 	rm -rf /tmp/Cloner-Base.repo*
 	
-	cp -rf ../repos/Cloner-Base.repo /tmp	
-	cp -rf ../repos/Cloner-epel.repo /tmp
+	/bin/cp -rf ../repos/Cloner-Base.repo /tmp	
+	/bin/cp -rf ../repos/Cloner-epel.repo /tmp
 	
 	sed  -i  '/^baseurl/d' /tmp/Cloner-Base.repo
 	
@@ -36,5 +36,6 @@ repo_create()
 
 repo_create $1 x86_64
 
-
+echo "Now used Downloader script with rpm -qa output
+	Syntax Downloader.sh /root/rpm_qa" $arch $epelv $centosVer  
 exit 0

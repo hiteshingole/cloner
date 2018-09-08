@@ -1,0 +1,47 @@
+#!/bin/bash
+
+#failed_packages "  $arch $epelv $centosVer
+#
+#
+
+epelv=$2
+arch=$1
+centosVer=$3
+
+cat /root/cloner/logs/Downloader.log|grep -i failed |awk  '{print $NF}' |grep -v mapr > /tmp/failed_packages
+>../logs/Downloader_failed.log
+
+# get the number of the version available to find which attempt failed.
+count_ver=`curl -s http://vault.centos.org/centos/| awk -F "href=" '{print $2}' |cut -d \" -f2 |tr -d \/ |grep -v ^$ |grep -i ^[0-9] |grep -i ^$epelv|wc -l`
+
+#reading one package at a time 
+while read -r package
+	do
+	echo $package >> ../logs/Downloader_failed.log
+	counter=0
+
+# looking for the package in all the possible location.
+	for i in  `curl -s http://vault.centos.org/centos/| awk -F "href=" '{print $2}' |cut -d \" -f2 |tr -d \/ |grep -v ^$ |grep -i ^[0-9] |grep -i ^$epelv` 
+	do  	
+		counter=$((counter+1))	
+		 wget -c http://vault.centos.org/centos/$i/os/$arch/Packages/$package.rpm -P /mnt/my.cluster.com/customerrepos
+		 if [ $? -ne 0 ]; then
+			# if we  failed to download  then we will compare with all posible version/location we looked into and then we will declare that the download is failed for that package	
+			if [ $counter -eq $count_ver ]
+				then
+					echo failed to download the $package >> ../logs/Downloader_failed.log
+			fi
+                
+		else
+                        echo sucessfully to dowloaded the package $package  >> ../logs/Downloader_failed.log
+			break	
+
+		fi
+					
+		
+		
+	done 
+
+done < /tmp/failed_packages
+
+

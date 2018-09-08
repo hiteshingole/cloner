@@ -1,7 +1,3 @@
-Downloadin Output of rpm -qa
-Failed to dowload the package Output of rpm -qa
-Downloadin __________________________________________________
-Failed to dowload the package __________________________________________________
 Downloadin libuuid-2.23.2-33.el7_3.2.x86_64
 Failed to dowload the package libuuid-2.23.2-33.el7_3.2.x86_64
 Downloadin gnutls-3.3.8-14.el7_2.x86_64
