@@ -1,11 +1,14 @@
 #!/bin/bash
 # elif statements
-if [ $1 -ge 18 ]
-then
-echo You may go to the party.
-elif [ $2 == 'yes' ]
-then
-echo You may go to the party but be back before midnight.
-else
-echo You may not go to the party.
-fi
+
+#echo $1
+
+count=`grep $1 /tmp/test |wc -l`
+if [ $count -gt 1 ];then
+echo $1 is dup
+
+sed -i "/$1/d" /tmp/test
+echo removing dup entries 
+exit 154
+fi 
+

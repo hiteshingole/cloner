@@ -44,4 +44,5 @@ while read -r package
 
 done < /tmp/failed_packages
 
+cat ../logs/Downloader_failed.log  |grep -i failed |awk '{print $NF}' > /tmp/buildlogs
 

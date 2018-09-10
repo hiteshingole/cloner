@@ -13,14 +13,18 @@ download_packages()
 	yum clean all 
 	while read -r package
 	do 
-		echo Downloadin $package >> ../logs/Downloader.log
-		yumdownloader --disablerepo=* --enablerepo=cloner* --destdir=/mnt/my.cluster.com/customerrepos $package
-							
-		if [ $? -ne 0 ]; then
-			echo Failed to dowload the package $package  >> ../logs/Downloader.log
+		echo Searching $package >> ../logs/Downloader.log
+		status=`find /mnt/my.cluster.com/customerrepos -name $package.rpm |wc -l `	
+		if [ $status -eq 0 ]
+			then
+	
+				yumdownloader --disablerepo=* --enablerepo=cloner* --destdir=/mnt/my.cluster.com/customerrepos $package
+			if [ $? -ne 0 ]; then
+				echo Failed to dowload the package $package  >> ../logs/Downloader.log
+			fi
+		else 
+			echo pakage already present >> ../logs/Downloader.log
 		fi
-
-		
 
 	done < $rpm_file
 	failed_packages=`grep -i failed ../logs/Downloader.log|wc -l`
